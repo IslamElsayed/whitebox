@@ -76,3 +76,6 @@ end
 
 # haml for views
 gem "haml-rails"
+
+# authentication
+gem "devise"
