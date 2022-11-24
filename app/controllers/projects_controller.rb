@@ -3,10 +3,11 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project, only: %i[show edit update destroy]
+  before_action :set_users, only: %i[new edit]
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.all
+    @projects = current_user.projects
   end
 
   # GET /projects/1 or /projects/1.json
@@ -22,7 +23,7 @@ class ProjectsController < ApplicationController
 
   # POST /projects or /projects.json
   def create
-    @project = Project.new(project_params)
+    @project = Project.new(project_params.merge(projects_users_attributes: [{ user_id: current_user.id, role: :owner }]))
 
     respond_to do |format|
       if @project.save
@@ -65,8 +66,12 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  def set_users
+    @users = User.where.not(id: current_user.id)
+  end
+
   # Only allow a list of trusted parameters through.
   def project_params
-    params.require(:project).permit(:name)
+    params.require(:project).permit(:name, user_ids: [])
   end
 end

@@ -3,6 +3,8 @@
 class Project < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
-  belongs_to :owner
-  has_many :collaborators, class_name: 'User'
+  has_many :projects_users
+  has_many :users, through: :projects_users
+
+  accepts_nested_attributes_for :projects_users
 end

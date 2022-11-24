@@ -11,4 +11,7 @@
     = form.label :name, style: "display: block"
     = form.text_field :name
   %div
+    = form.label :collaborators, style: "display: block"
+    = form.select :user_ids, options_from_collection_for_select(@users, :id, :email, project.user_ids), {}, multiple: true
+  %div
     = form.submit
