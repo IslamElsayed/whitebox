@@ -23,7 +23,8 @@ class ProjectsController < ApplicationController
 
   # POST /projects or /projects.json
   def create
-    @project = Project.new(project_params.merge(projects_users_attributes: [{ user_id: current_user.id, role: :owner }]))
+    @project = Project.new(project_params.merge(projects_users_attributes: [{ user_id: current_user.id,
+                                                                              role: :owner }]))
 
     respond_to do |format|
       if @project.save
