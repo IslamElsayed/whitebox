@@ -22,11 +22,11 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = @project.tasks.new(task_params.merge(creator: current_user))
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to task_path(@task), notice: 'Task was successfully created.' }
+        format.html { redirect_to project_task_path(@project, @task), notice: 'Task was successfully created.' }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -37,7 +37,7 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to task_path(@task), notice: 'Task was successfully updated.' }
+        format.html { redirect_to project_task_path(@task), notice: 'Task was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -66,6 +66,6 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:name, :project_id, :creator_id, :assignee_id)
+    params.require(:task).permit(:name, :assignee_id)
   end
 end
