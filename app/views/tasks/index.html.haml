@@ -1,26 +1,50 @@
+%p{ style: "color: green" }
+  = notice
 %h1 Listing tasks
+.row.flex-lg-nowrap
+  .col.mb-3
+    .e-panel.card
+      .card-body
+        .e-table
+          .table-responsive.table-lg.mt-3
+            %table.table.table-bordered
+              %thead
+                %tr
+                  %th Name
+                  %th Project
+                  %th Creator
+                  %th Assignee
+                  %th Status
+                  %th
+                  %th
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Project
-      %th Creator
-      %th Assignee
-      %th
-      %th
-      %th
-
-  %tbody
-    - @tasks.each do |task|
-      %tr
-        %td= task.name
-        %td= task.project
-        %td= task.creator
-        %td= task.assignee
-        %td= link_to 'Show', task
-        %td= link_to 'Edit', edit_task_path(task)
-        %td= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }
+              %tbody
+                - @tasks.each do |task|
+                  %tr
+                    %td.text-nowrap.align-middle
+                      %span
+                        = task.name
+                    %td.text-nowrap.align-middle
+                      %span
+                        = task.project_name
+                    %td.text-nowrap.align-middle
+                      %span
+                        = task.creator_name
+                    %td.text-nowrap.align-middle
+                      %span
+                        = task.assignee_name
+                    %td.text-nowrap.align-middle
+                      %span
+                        = task.status.humanize
+                    %td.text-center.align-middle
+                      .btn-group.align-top
+                        %button{ type: "button", "data-toggle": "modal", "data-target": "#user-form-modal" }
+                          = link_to 'Edit', edit_project_task_path(@project, task)
+                        = button_to project_task_path(@project, task), method: :get do
+                          %i.fa.fa-eye
+                    %td.text-nowrap.align-middle
+                      %span
+                        =# link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 

@@ -1,12 +1,18 @@
 !!!
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Whitebox
-    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    %title
+      | Whitebox
+    %meta{ name: "viewport", content: "width=device-width,initial-scale=1" }
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
   %body
-    = yield
+    %link{href: "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css", rel: "stylesheet" }
+    .container
+      - if user_signed_in?
+        = link_to 'Home', root_path
+        %br
+        = button_to "sign out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'btn btn-link'
+      = yield

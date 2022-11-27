@@ -1,9 +1,32 @@
 %p{:style => "color: green"}= notice
 %h1 Projects
-#projects
-  - @projects.each do |project|
-    = render project
-    %p
-      = link_to "Show this project", project
-      = link_to "Tasks", project_tasks_path(project)
+.row.flex-lg-nowrap
+  .col.mb-3
+    .e-panel.card
+      .card-body
+        .e-table
+          .table-responsive.table-lg.mt-3
+            %table.table.table-bordered
+              %thead
+                %tr
+                  %th Name
+                  %th Tasks
+                  %th
+
+              %tbody
+                - @projects.each do |project|
+                  %tr
+                    %td.text-nowrap.align-middle
+                      %span
+                      = project.name
+                    %td.text-nowrap.align-middle
+                      %span
+                      = link_to "ViewnTasks", project_tasks_path(project)
+                    %td.text-center.align-middle
+                      .btn-group.align-top
+                        %button{ type: "button", "data-toggle": "modal", "data-target": "#user-form-modal" }
+                          = link_to 'Edit', edit_project_path(project)
+                        = button_to project, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } } do
+                          %i.fa.fa-eye
+
 = link_to "New project", new_project_path
