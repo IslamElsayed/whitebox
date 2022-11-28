@@ -15,9 +15,7 @@
                   %th Creator
                   %th Assignee
                   %th Status
-                  %th
-                  %th
-
+                  %th Actions
               %tbody
                 - @tasks.each do |task|
                   %tr
@@ -42,9 +40,6 @@
                           = link_to 'Edit', edit_project_task_path(@project, task)
                         = button_to project_task_path(@project, task), method: :get do
                           %i.fa.fa-eye
-                    %td.text-nowrap.align-middle
-                      %span
-                        =# link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 

@@ -12,6 +12,12 @@
 %p
   %b Assignee:
   = @task.assignee_name
+%p
+  %b Status:
+  = @task.status.humanize
+%p
+  %b Description:
+  = @task.description
 
 = link_to 'Edit', edit_project_task_path(@project, @task)
 \|
