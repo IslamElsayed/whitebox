@@ -1,4 +1,5 @@
-= form_for @task, url: project_task_path(@project, @task) do |f|
+- path = @task.persisted? ? project_task_path(@project, @task) : project_tasks_path(@project)
+= form_for @task, url: path do |f|
   - if @task.errors.any?
     #error_explanation
       %h2= "#{pluralize(@task.errors.count, "error")} prohibited this task from being saved:"

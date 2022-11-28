@@ -90,13 +90,13 @@ RSpec.describe '/projects', type: :request do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        { name: 'new name' }
       end
 
       it 'updates the requested project' do
         patch project_url(project), params: { project: new_attributes }
         project.reload
-        skip('Add assertions for updated state')
+        expect(project.name).to eq('new name')
       end
 
       it 'redirects to the project' do
