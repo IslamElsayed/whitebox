@@ -44,15 +44,6 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /tasks/1 or /tasks/1.json
-  def destroy
-    @task.destroy
-
-    respond_to do |format|
-      format.html { redirect_to tasks_path, notice: 'Task was successfully destroyed.' }
-    end
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -66,6 +57,6 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:name, :assignee_id)
+    params.require(:task).permit(:name, :description, :assignee_id, :status)
   end
 end

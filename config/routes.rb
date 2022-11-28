@@ -2,8 +2,8 @@
 
 Rails.application.routes.draw do
   devise_for :users
-  resources :projects do
-    resources :tasks
+  resources :projects, except: [:destroy] do
+    resources :tasks, except: [:destroy]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

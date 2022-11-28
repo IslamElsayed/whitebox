@@ -31,9 +31,5 @@ RSpec.describe ProjectsController, type: :routing do
     it 'routes to #update via PATCH' do
       expect(patch: '/projects/1').to route_to('projects#update', id: '1')
     end
-
-    it 'routes to #destroy' do
-      expect(delete: '/projects/1').to route_to('projects#destroy', id: '1')
-    end
   end
 end

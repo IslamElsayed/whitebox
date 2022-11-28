@@ -19,16 +19,20 @@ RSpec.describe '/projects', type: :request do
   # Project. As you add validations to Project, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    { name: 'project name' }
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    { name: '' }
   end
+
+  let(:user) { create(:user) }
+  before { sign_in(user) }
+
+  let!(:project) { create(:projects_user, role: 'owner').project }
 
   describe 'GET /index' do
     it 'renders a successful response' do
-      Project.create! valid_attributes
       get projects_url
       expect(response).to be_successful
     end
@@ -36,7 +40,6 @@ RSpec.describe '/projects', type: :request do
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      project = Project.create! valid_attributes
       get project_url(project)
       expect(response).to be_successful
     end
@@ -51,7 +54,6 @@ RSpec.describe '/projects', type: :request do
 
   describe 'GET /edit' do
     it 'renders a successful response' do
-      project = Project.create! valid_attributes
       get edit_project_url(project)
       expect(response).to be_successful
     end
@@ -92,14 +94,12 @@ RSpec.describe '/projects', type: :request do
       end
 
       it 'updates the requested project' do
-        project = Project.create! valid_attributes
         patch project_url(project), params: { project: new_attributes }
         project.reload
         skip('Add assertions for updated state')
       end
 
       it 'redirects to the project' do
-        project = Project.create! valid_attributes
         patch project_url(project), params: { project: new_attributes }
         project.reload
         expect(response).to redirect_to(project_url(project))
@@ -108,25 +108,9 @@ RSpec.describe '/projects', type: :request do
 
     context 'with invalid parameters' do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        project = Project.create! valid_attributes
         patch project_url(project), params: { project: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    end
-  end
-
-  describe 'DELETE /destroy' do
-    it 'destroys the requested project' do
-      project = Project.create! valid_attributes
-      expect do
-        delete project_url(project)
-      end.to change(Project, :count).by(-1)
-    end
-
-    it 'redirects to the projects list' do
-      project = Project.create! valid_attributes
-      delete project_url(project)
-      expect(response).to redirect_to(projects_url)
     end
   end
 end
